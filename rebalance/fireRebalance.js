@@ -888,41 +888,6 @@ rebalance({
 	})
 })
 
-rebalance({
-	category: 37,
-	name: /SDL1/
-}, (template, i, meta, text) => {
-	// Increase grip and weight of all bikes
-	patch(template, 'Ammo_CustomParameter', values => {
-		const summonParameters = values[4]
-		const vehicleParameters = summonParameters.value[3]
-		const mobilityParameters = vehicleParameters.value[1]
-		const grip = mobilityParameters.value[0]
-		grip.value *= 3
-		const weight = mobilityParameters.value[2]
-		weight.value *= 1.5
-		return values
-	})
-})
-
-rebalance({
-	category: 37,
-	name: /Grape/
-}, (template, i, meta, text) => {
-	// Add full rotation to grape's cannon
-	const path = './SgottMods/weapon/vehicle401_striker'
-	const vehicleTemplate = require(`${rbDataPath}VEHICLE401_STRIKER.json`)
-	const cannonControl = getNode(vehicleTemplate, 'striker_cannon_ctrl')
-	cannonControl.value[2].value = 60
-	rawSgos.set(path.split(/\//).pop(), vehicleTemplate)
-	patch(template, 'Ammo_CustomParameter', values => {
-		const summonParameters = values[4]
-		const vehicleConfig = summonParameters.value[2]
-		vehicleConfig.value = path + '.SGO'
-		return values
-	})
-})
-
 function json(obj) {
 	return JSON.stringify(obj, null, 2)
 }
